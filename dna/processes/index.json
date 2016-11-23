@@ -1,0 +1,44 @@
+{
+  "plasma": {
+    "express-server": {
+      "source": "organic-express-server",
+      "name": "ExpressServer",
+      "initScript": "cell/organelles/express-server",
+      "port": 1337,
+      "logRunning": true,
+      "emitReady": "ExpressServer",
+      "forceConnectionsDestroyOnClose": false,
+      "publicRoutes": [
+        "GET /favicon.ico",
+        "GET /"
+      ]
+    },
+    "mongoose": {
+      "source": "organic-mongoose",
+      "database": {
+        "host": "127.0.0.1",
+        "name": "organic-skeleton-db",
+        "port": 27017
+      }
+    },
+    "picture-manager": {
+      "source": "../../cell/organelles/picture-manager",
+      "name": "PictureManager"
+    }
+  },
+  "membrane": {
+    "http-api-routes": {
+      "source": "organic-express-routes",
+      "name": "ExpressHttpApi",
+      "path": "cell/organelles/http-api",
+      "pattern": "/**/*.js",
+      "reactOn": "ExpressServer",
+      "emitReady": "ExpressHttpApi",
+      "log": true
+    },
+    "http-api-response": {
+      "source": "organic-express-response",
+      "reactOn": ["ExpressServer", "ExpressHttpApi"]
+    }
+  }
+}
