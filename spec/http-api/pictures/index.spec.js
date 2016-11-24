@@ -16,7 +16,7 @@ describe('GET /picture', () => {
 
   it('works', done => {
     request({
-      url: `${apiRoot}/picture`,
+      url: `${apiRoot}/pictures`,
       headers: {
         'Authorization': global.user.authToken
       },
