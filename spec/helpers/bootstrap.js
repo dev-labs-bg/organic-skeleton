@@ -21,7 +21,7 @@ global.user = null
 
 global.apiRoot = 'http://localhost:8080'
 
-global.startApi = (done) => {
+global.startApi = done => {
   buildCell((err, cell) => {
     if (err) throw new Error('Cell build error', err)
     global.cell = cell
@@ -38,7 +38,7 @@ global.startApi = (done) => {
   })
 }
 
-global.stopApi = (done) => {
+global.stopApi = done => {
   testData.destroy()
     .then(() => {
       global.cell.kill()
@@ -65,4 +65,3 @@ const testData = {
     return mongoose.connection.db.dropDatabase()
   }
 }
-

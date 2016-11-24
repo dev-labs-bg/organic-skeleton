@@ -30,7 +30,7 @@ class ExpressServer extends Organelle {
         return next(true)
       }
       User.findOne({
-        authorizationToken: authToken
+        authToken: authToken
       }, function(err, user) {
         if (err) return next(err)
         if (!user) {

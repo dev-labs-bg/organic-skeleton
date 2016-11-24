@@ -11,9 +11,17 @@ class PictureManager extends Organelle {
     })
   }
 
-  findPictures(searchTerm, offset, limit, done) {
-    // TODO: bussiness logic
-    return done()
+  findPictures(searchTerm, offset = 0, limit = 0, done) {
+    Picture
+      .find({
+        name: new RegExp(searchTerm, 'i')
+      })
+      .skip(offset)
+      .limit(limit)
+      .exec((err, pictures) => {
+        if (err) return done(err)
+        return done(null, pictures)
+      })
   }
 }
 
