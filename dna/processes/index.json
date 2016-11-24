@@ -24,6 +24,10 @@
     "picture-manager": {
       "source": "../../cell/organelles/picture-manager",
       "name": "PictureManager"
+    },
+    "user-manager": {
+      "source": "../../cell/organelles/user-manager",
+      "name": "UserManager"
     }
   },
   "membrane": {

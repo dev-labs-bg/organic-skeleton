@@ -2,6 +2,7 @@ const url = require('url')
 const express = require('express')
 const Organelle = require('../organelle')
 const User = require('../../models/user')
+var bodyParser = require('body-parser')
 
 class ExpressServer extends Organelle {
   
@@ -12,6 +13,9 @@ class ExpressServer extends Organelle {
     app.set('x-powered-by', false)
 
     app.use('/static', express.static('public'))
+    
+    // parse application/json
+    app.use(bodyParser.json())
 
     app.use((req, res, next) => {
 
