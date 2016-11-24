@@ -3,6 +3,7 @@
  */
 
 const mongoose = require('mongoose')
+const loadDna = require('organic-dna-loader')
 const User = require('../../cell/models/user')
 let mockUser = require(`${process.cwd()}/assets/mock/users`)[0]
 
@@ -29,36 +30,51 @@ global.startApi = done => {
     // wait for api ready event to kick in
     global.cell.plasma.on('ExpressHttpApi', () => {
       // insert test data
-      testData.init()
+      db.insertUser(mockUser)
         .then(user => {
           global.user = user
 
           return done()
         })
+        .catch(err => done(err))
     })
   })
 }
 
 global.stopApi = done => {
-  testData.destroy()
+  db.drop()
     .then(() => {
       global.cell.kill()
       return done()
     })
 }
 
-const testData = {
+global.db = {
+  connect() {
+    return new Promise((resolve, reject) => {
+      loadDna((err, dna) => {
+        if (err) return reject(err)
+        const db = dna.processes.index.plasma.mongoose.database
+        const dbLocation = `mongodb://${db.host}:${db.port}/${db.name}`
+
+        mongoose.connect(dbLocation, err => {
+          if (err) return reject(err)
+          return resolve(dna)
+        })
+      })
+    })
+  },
+
   // returns promise
-  init(done) {
-    return User.create(mockUser)
+  insertUser(userData) {
+    return User.create(userData)
     .then(user => {
       return user
     })
-    .catch(err => done(err))
   },
   
   // returns a promise
-  destroy() {
+  drop() {
     return mongoose.connection.db.dropDatabase()
   }
 }
