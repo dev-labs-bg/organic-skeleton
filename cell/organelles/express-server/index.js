@@ -11,7 +11,7 @@ class ExpressServer extends Organelle {
     var app = express()
     app.set('x-powered-by', false)
 
-    app.use('/static', express.static('/public'))
+    app.use('/static', express.static('public'))
 
     app.use((req, res, next) => {
 
@@ -27,7 +27,7 @@ class ExpressServer extends Organelle {
           status: 'ERROR',
           msg: 'Missing Authorization header'
         })
-        return next(true)
+        return next()
       }
       User.findOne({
         authToken: authToken
@@ -40,7 +40,7 @@ class ExpressServer extends Organelle {
             status: 'ERROR',
             msg: 'Authorization token incorrect'
           })
-          return next(true)
+          return next()
         }
 
         // attach authorized user to req

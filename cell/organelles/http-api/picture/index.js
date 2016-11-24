@@ -12,10 +12,13 @@ module.exports = (plasma, dna, helpers) => {
       plasma.emit(chemical, (err, pictures) => {
         if (err) return next(err)
 
-        // keep only what's needed from pictures
+        // keep only needed properties convert path to url
         pictures = Array.from(pictures, picture => {
           const { name, path } = picture
-          return { name, path }
+          return {
+            name: name,
+            url: `${dna.serverDomain}/static/images/${path}`
+          }
         })
 
         res.body = {

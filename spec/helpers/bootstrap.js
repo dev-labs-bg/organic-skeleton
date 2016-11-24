@@ -4,6 +4,7 @@
 
 const mongoose = require('mongoose')
 const User = require('../../cell/models/user')
+let mockUser = require(`${process.cwd()}/assets/mock/users`)[0]
 
 // test environment
 process.env.CELL_MODE = '_test'
@@ -49,11 +50,7 @@ global.stopApi = done => {
 const testData = {
   // returns promise
   init(done) {
-    return User.create({
-      name: 'Cvetinodjukati Bemaina',
-      picture: 'http://i49.vbox7.com/o/56b/56bc377c160.jpg',
-      authToken: 'TEST'
-    })
+    return User.create(mockUser)
     .then(user => {
       return user
     })

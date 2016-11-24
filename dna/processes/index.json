@@ -34,7 +34,8 @@
       "pattern": "/**/*.js",
       "reactOn": "ExpressServer",
       "emitReady": "ExpressHttpApi",
-      "log": true
+      "log": true,
+      "serverDomain": "@secrets.serverDomain"
     },
     "http-api-response": {
       "source": "organic-express-response",
