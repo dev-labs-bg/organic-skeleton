@@ -1,6 +1,6 @@
 # A boilerplate for building NodeJS web applications.
 
-## Implemented via the ['Organic'](https://github.com/VarnaLab/node-organic) pattern.
+## Implemented via the [Organic](https://github.com/VarnaLab/node-organic) pattern.
 
 ### Prerequisites
 * NodeJS v6.2.1 or above
@@ -11,14 +11,11 @@
 * ``node_modules/.bin/jasmine`` runs all tests
 * ``node_modules./bin/jasmine <filename>`` runs individual test batch
 
-### Running tasks
-* ``./node_modules/.bin/grunt <task name>``
-
 ### Setup and start
 1. ``npm install``
 2. Configure mongodb
   - Replace "organic-skeleton-db/organic-skeleton-test-db" with your db name for _development, _production and _test environments in `dna/processes/index.json` files
-  
+
   Note: Keep in mind it's a good idea to use different db for tests, since it will be wiped out every time you run them.
 3. ``npm run seed`` to fill up db with demo data.
 4. ``node index.js`` or ``npm start``
