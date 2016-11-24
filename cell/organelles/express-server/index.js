@@ -8,7 +8,7 @@ class ExpressServer extends Organelle {
   constructor(plasma, dna, next) {
     super(plasma, dna)
 
-    var app = express()
+    let app = express()
     app.set('x-powered-by', false)
 
     app.use('/static', express.static('public'))
