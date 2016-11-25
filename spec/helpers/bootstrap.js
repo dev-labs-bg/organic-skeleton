@@ -43,6 +43,7 @@ global.startApi = done => {
 
 global.stopApi = done => {
   db.disconnect(err => {
+    if(err) return done(err)
     global.cell.kill()
     return done()
   })
