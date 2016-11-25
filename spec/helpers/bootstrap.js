@@ -42,11 +42,10 @@ global.startApi = done => {
 }
 
 global.stopApi = done => {
-  db.drop()
-    .then(() => {
-      global.cell.kill()
-      return done()
-    })
+  db.disconnect(err => {
+    global.cell.kill()
+    return done()
+  })
 }
 
 global.db = {
