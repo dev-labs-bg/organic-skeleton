@@ -21,5 +21,4 @@ describe('bootstrap.js', () => {
       return done()
     })
   })
-
 })
