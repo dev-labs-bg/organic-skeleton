@@ -50,17 +50,17 @@ global.stopApi = done => {
 }
 
 global.db = {
-  connect() {
-    return new Promise((resolve, reject) => {
-      loadDna((err, dna) => {
-        if (err) return reject(err)
-        const db = dna.processes.index.plasma.mongoose.database
-        const dbLocation = `mongodb://${db.host}:${db.port}/${db.name}`
+  connect(done) {
+    loadDna((err, dna) => {
+      if (err) return done(err)
 
-        mongoose.connect(dbLocation, err => {
-          if (err) return reject(err)
-          return resolve(dna)
-        })
+      const db = dna.processes.index.plasma.mongoose.database
+      const dbLocation = `mongodb://${db.host}:${db.port}/${db.name}`
+
+      mongoose.connect(dbLocation, err => {
+        if (err) return done(err)
+
+        return done()
       })
     })
   },
@@ -72,9 +72,38 @@ global.db = {
       return user
     })
   },
-  
-  // returns a promise
-  drop() {
-    return mongoose.connection.db.dropDatabase()
+
+  disconnect(done) {
+    if (mongoose.connection.readyState) {
+      mongoose.connection.db.dropDatabase(() => {
+        mongoose.disconnect(err => {
+          if (err) return done(err)
+
+          return mongoose.connection.once("disconnected", done)
+        })
+      })
+    } else {
+      done(new Error("connection already closed"))
+    }
   }
+}
+
+global.loadOrganelleDna = (pathToOrganelle, done) => {
+  loadDna((err, dna) => {
+    if (err) return done(err)
+
+    var fallbackDna = {}
+    var resolvedDna = dna
+
+    pathToOrganelle.split('.').forEach((element) => {
+      if (typeof resolvedDna[element] === 'undefined') {
+        resolvedDna = fallbackDna
+        return false
+      }
+
+      resolvedDna = resolvedDna[element]
+    })
+
+    done(null, resolvedDna)
+  })
 }
