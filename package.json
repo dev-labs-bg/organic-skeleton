@@ -17,6 +17,7 @@
   "license": "ISC",
   "homepage": "https://github.com/VarnaLab/node-organic",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.13.4",
     "jasmine": "^2.4.1",
     "mongoose": "^4.5.3",
